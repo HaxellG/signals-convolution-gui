@@ -12,11 +12,10 @@ Sigue los siguientes pasos para instalar y ejecutar el proyecto en tu entorno lo
 
 ### 1. Clonar el repositorio
 
-Clona este repositorio en tu máquina local:
+Clona este repositorio en tu máquina local en la carpeta donde quieras trabajar:
 
 ```bash
-git clone http
-cd signal-transformations
+git clone https://github.com/HaxellG/signals-convolution-gui.git
 ```
 
 ### 2. Crear un entorno virtual

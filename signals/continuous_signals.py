@@ -62,6 +62,8 @@ def generate_continous_conv(t, x_t, h, h_t):
     layout_señales = go.Layout(
         xaxis=dict(showgrid=True, range=[x_min, x_max]),
         yaxis=dict(showgrid=True),
+        xaxis_title="Tiempo",
+        yaxis_title="Amplitud",
         title='Gráfica de la señal fija y la señal en movimiento'
     )
 
@@ -86,6 +88,8 @@ def generate_continous_conv(t, x_t, h, h_t):
     layout_convolucion = go.Layout(
         xaxis=dict(showgrid=True, autorange=True),
         yaxis=dict(showgrid=True),
+        xaxis_title="Tiempo",
+        yaxis_title="Amplitud",
         title='Gráfica de Convolución en tiempo real'
     )
 

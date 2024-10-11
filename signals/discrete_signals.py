@@ -61,6 +61,8 @@ def generate_discrete_conv(x, h, x_n, h_n):
     fig_senales_fija.update_layout(
         xaxis=dict(showgrid=True, range=[n_min, n_max]),
         yaxis=dict(showgrid=True),
+        xaxis_title="Tiempo",
+        yaxis_title="Amplitud",
         title='Gráfica de la señal fija y la señal en movimiento'
     )
 
@@ -99,6 +101,8 @@ def generate_discrete_conv(x, h, x_n, h_n):
             title='Gráfica de la señal fija y la señal en movimiento',
             xaxis=dict(showgrid=True, range=[n_min, n_max]),
             yaxis=dict(showgrid=True),
+            xaxis_title="Tiempo",
+            yaxis_title="Amplitud",
             template='plotly_white'
         )
         

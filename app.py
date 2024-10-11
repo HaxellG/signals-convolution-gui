@@ -20,7 +20,7 @@ from signals.discrete_signals import (
 Delta = 0.01
 
 # Señal Continua A
-ta=[0]
+ta = [0]
 ta2 = np.arange(0, 3, Delta)
 ta3 = np.arange(3, 5, Delta)
 ta4 = [5]
@@ -29,7 +29,7 @@ ta_t = np.concatenate((ta, ta2, ta3, ta4))
 xa=[0]
 xa2 = 2*np.ones(len(ta2))
 xa3 = (-2*np.ones(len(ta3)))
-xa4=[0]
+xa4 = [0]
 x_ta = np.concatenate((xa, xa2, xa3, xa))
 
 
@@ -106,7 +106,6 @@ if selected_option == "Introducción":
     st.write("Utilice el menú de la izquierda para navegar entre las diferentes secciones y funcionalidades de la aplicación.")
 
 elif selected_option == "Señales Continuas":
-    # Mover las selecciones del sidebar a la página principal
     column_1, column_2 = st.columns(2)
     
     with column_1:
@@ -215,7 +214,6 @@ elif selected_option == "Señales Discretas":
                 x_inv, y_inv = invert_discrete_signal(x, y)
                 inv = generate_discrete_graphique(x_inv, y_inv, "x[n] invertida", LIGHT_BLUE_COLOR)
                 st.plotly_chart(inv, use_container_width=True)
-
                 generate_discrete_conv(h, x, z, y)
             elif signal_to_invert == "h[n]":
                 h_inv, z_inv = invert_discrete_signal(h, z)

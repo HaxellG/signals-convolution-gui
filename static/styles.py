@@ -16,6 +16,15 @@ def build_custom_error(text: str):
         </div>
     """
 
+CSS_TOPBAR_STYLES = f"""
+    <style>
+        [data-testid="stDecoration"] {{
+            background-image: linear-gradient(to right, {DARK_BLUE_COLOR}, {DARK_PURPLE_COLOR}, {MEDIUM_BLUE_COLOR});
+            height: 5px;  /* Ajusta el grosor de la línea si lo deseas */
+        }}
+    </style>
+"""
+
 CSS_SIDEBARD_STYLES = """
 <style>
     /* Main content area */
@@ -85,7 +94,7 @@ CSS_SIDEBARD_STYLES = """
 
     [data-testid="stSidebar"] .stRadio > div [data-testid="stMarkdownContainer"] p {
         margin: 0;
-        color: #ffffff !important; /* Ensure that markdown text is white */
+        color: #ffffff !important;
     }
 
     /* Main content styling */

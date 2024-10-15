@@ -1,6 +1,7 @@
 import numpy as np
 import streamlit as st
 from static.styles import (
+    CSS_TOPBAR_STYLES,
     CSS_SIDEBARD_STYLES,
     CSS_CREDITS_STYLES,
     LIGHT_BLUE_COLOR, 
@@ -100,6 +101,7 @@ for i in range(len(hb)):
 MENU_OPTIONS = ["Introducción", "Señales Continuas", "Señales Discretas", "Créditos"]
 
 st.set_page_config(layout="wide")
+st.markdown(CSS_TOPBAR_STYLES, unsafe_allow_html=True)
 st.markdown(CSS_SIDEBARD_STYLES, unsafe_allow_html=True)
 st.markdown(f"""
     <h1 style='text-align: center; color: {DARK_BLUE_COLOR};'>Interfaz de Convolución de Señales</h1>

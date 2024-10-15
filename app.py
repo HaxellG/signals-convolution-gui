@@ -1,10 +1,14 @@
 import numpy as np
 import streamlit as st
 from static.styles import (
-    CSS_STYLES,
+    CSS_SIDEBARD_STYLES,
+    CSS_CREDITS_STYLES,
     LIGHT_BLUE_COLOR, 
     MEDIUM_BLUE_COLOR, 
     LIGHT_PURPLE_COLOR,
+    DARK_BLUE_COLOR,
+    DARK_PURPLE_COLOR,
+    build_custom_error,
 )
 from signals.continuous_signals import (
     generate_continuous_graphique, 
@@ -96,27 +100,79 @@ for i in range(len(hb)):
 MENU_OPTIONS = ["Introducción", "Señales Continuas", "Señales Discretas", "Créditos"]
 
 st.set_page_config(layout="wide")
-st.markdown(CSS_STYLES, unsafe_allow_html=True)
-st.title("Convolucionador de Señales")
+st.markdown(CSS_SIDEBARD_STYLES, unsafe_allow_html=True)
+st.markdown(f"""
+    <h1 style='text-align: center; color: {DARK_BLUE_COLOR};'>Interfaz de Convolución de Señales</h1>
+""", unsafe_allow_html=True)
 st.sidebar.title("MENU DE INTERACCION")
 selected_option = st.sidebar.selectbox("Seleccione una opción", MENU_OPTIONS)
 
 if selected_option == "Introducción":
-    st.write("Bienvenido a esta interfaz gráfica de convolución de señales. Esta herramienta le permitirá explorar y entender mejor el proceso de convolución en diferentes tipos de señales.")
-    st.write("Utilice el menú de la izquierda para navegar entre las diferentes secciones y funcionalidades de la aplicación.")
+    st.subheader("🌟 Bienvenido a la Interfaz Gráfica de Convolución de Señales")
+    st.markdown("""
+    En esta aplicación interactiva, **explorarás y entenderás** el proceso de **convolución** en señales 
+    tanto en el **dominio del tiempo continuo** como en el **dominio del tiempo discreto**. 
+    ¡Profundicemos más en estos conceptos y aprendamos cómo las señales se combinan mediante la convolución! 🎯
+    """)
+    
+    column_1, column_2 = st.columns(2)
+
+    with column_1:
+        st.markdown(f"""
+            <h3 style='text-align: center; color: {DARK_PURPLE_COLOR};'>📈 ¿Qué es una señal?</h3>
+        """, unsafe_allow_html=True)
+
+        st.write("""
+        Las señales son representaciones matemáticas que **varían en el tiempo** o el espacio, 
+        transportando información.
+        """)
+        with st.expander("Tipos de señales"):
+
+            st.write("""
+            Existen dos tipos fundamentales:
+            - **Señales de tiempo continuo**: Definidas para cada valor en un rango continuo de tiempo.
+            - **Señales de tiempo discreto**: Definidas solo en momentos específicos o discretos de tiempo.
+            Estas señales pueden representar diferentes fenómenos, como sonido, luz o datos de sensores.
+            """)
+
+    with column_2:
+        st.markdown(f"""
+            <h3 style='text-align: center; color: {DARK_PURPLE_COLOR};'>🔄 ¿Qué es la convolución?</h3>
+        """, unsafe_allow_html=True)
+        st.write("""
+        En ingeniería, la **convolución** es clave para analizar cómo un sistema modifica una señal de entrada.
+        Se utiliza cuando conocemos la **señal de entrada** y la **respuesta al impulso** de un sistema, 
+        permitiéndonos calcular su **señal de salida**
+        """)
+        st.write("**Dominios**:")
+        st.markdown("""
+        - En el **dominio continuo**, la convolución se representa como una **integral** de productos de las señales a lo largo del tiempo.
+        - En el **dominio discreto**, la convolución se representa como una **suma** de productos de las señales en diferentes momentos.
+        """)
+
+    st.markdown("""
+    Utilice el **menú de la izquierda** para navegar entre las diferentes secciones y explorar todas las funcionalidades de esta aplicación. 
+    ¡Sumérgete en el fascinante mundo de las señales y la convolución! 🚀
+    """)
 
 elif selected_option == "Señales Continuas":
+    st.markdown("<br><br>", unsafe_allow_html=True)
     column_1, column_2 = st.columns(2)
     
     with column_1:
-        st.markdown("**Señal x(t)**")
+        st.markdown(f"""
+            <h3 style='color: {DARK_BLUE_COLOR};'>Señal x(t)</h3>
+        """, unsafe_allow_html=True)
         x_t = st.selectbox("Señal x(t)", ["Seleccione la señal a graficar", "A", "B", "C", "D"])
     with column_2:
-        st.markdown("**Señal h(t)**")
+        st.markdown(f"""
+            <h3 style='color: {DARK_BLUE_COLOR};'>Señal h(t)</h3>
+        """, unsafe_allow_html=True)
         h_t = st.selectbox("Señal h(t)", ["Seleccione la señal a graficar", "A", "B", "C", "D"])
 
     if x_t == "Seleccione la señal a graficar" or h_t == "Seleccione la señal a graficar":
-        st.error("Seleccione ambas señales para continuar")
+        CSS_CUSTOM_ERROR_STYLES = build_custom_error('⚠️ Seleccione ambas señales para continuar')
+        st.markdown(CSS_CUSTOM_ERROR_STYLES, unsafe_allow_html=True)
     else:
         if x_t == "A":
             x = ta_t
@@ -144,39 +200,54 @@ elif selected_option == "Señales Continuas":
             h = td_t
             z = x_td
 
-        st.markdown("**Señal a invertir**")
-        signal_to_invert = st.selectbox("", ["Seleccione la señal a invertir", "x(t)", "h(t)"])
-
         column_1, column_2 = st.columns(2)
         with column_1:
-            st.markdown("**Gráfica de x(t)**")
             generate_continuous_graphique(x, y, MEDIUM_BLUE_COLOR, "x(t)")
         with column_2:
-            st.markdown("**Gráfica de h(t)**")
             generate_continuous_graphique(h, z, LIGHT_PURPLE_COLOR, "h(t)")
 
+        st.markdown(f"""
+            <h3 style='text-align: center;color: {DARK_PURPLE_COLOR};'>Señal a invertir</h3>
+        """, unsafe_allow_html=True)
+        signal_to_invert = st.selectbox("", ["Seleccione la señal a invertir", "x(t)", "h(t)"])
+
         if signal_to_invert == "Seleccione la señal a invertir":
-            st.error("Seleccione la señal a invertir")
+            CSS_CUSTOM_ERROR_STYLES = build_custom_error('⚠️ Seleccione la señal a invertir')
+            st.markdown(CSS_CUSTOM_ERROR_STYLES, unsafe_allow_html=True)
         else:
             if signal_to_invert == "x(t)":
-                st.markdown("**Gráfica de la señal invertida**")
+                st.markdown("<br><br>", unsafe_allow_html=True)
+                st.markdown(f"""
+                    <h5 style='color: {DARK_BLUE_COLOR};'>Gráfica de la señal invertida</h3>
+                """, unsafe_allow_html=True)
                 t_inv, x_inv = invert_continous_signal(x, y)
                 generate_continuous_graphique(t_inv, x_inv, LIGHT_BLUE_COLOR, "x(t) invertida")
-                st.markdown("### Proceso de convolución ###")
+                st.markdown(f"""
+                    <h2 style='text-align: center; color: {DARK_BLUE_COLOR};'>Proceso de convolución</h3>
+                """, unsafe_allow_html=True)
                 generate_continous_conv(h, z, x, y)
             elif signal_to_invert == "h(t)":
-                st.markdown("**Gráfica de la señal invertida**")
+                st.markdown("<br><br>", unsafe_allow_html=True)
+                st.markdown(f"""
+                    <h5 style='color: {DARK_BLUE_COLOR};'>Gráfica de la señal invertida</h3>
+                """, unsafe_allow_html=True)
                 t_inv, x_inv = invert_continous_signal(h, z)
                 generate_continuous_graphique(t_inv, x_inv, LIGHT_BLUE_COLOR, "h(t) invertida")
-                st.markdown("### Proceso de convolución ###")
+                st.markdown(f"""
+                    <h2 style='text-align: center; color: {DARK_BLUE_COLOR};'>Proceso de convolución</h3>
+                """, unsafe_allow_html=True)
                 generate_continous_conv(x, y, h, z)
 
 elif selected_option == "Señales Discretas":
-    st.markdown("**Seleccione la señal a graficar**")
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown(f"""
+            <h3 style='color: {DARK_PURPLE_COLOR};'>Seleccione la señal a graficar</h3>
+        """, unsafe_allow_html=True)
     selected_signal = st.selectbox("Señal x[n]", ["Seleccione la señal a graficar", "A", "B"])
 
     if selected_signal == "Seleccione la señal a graficar":
-        st.error("Debe seleccionar las señal a graficar para continuar")
+        CSS_CUSTOM_ERROR_STYLES = build_custom_error('⚠️ Debe seleccionar las señal a graficar para continuar')
+        st.markdown(CSS_CUSTOM_ERROR_STYLES, unsafe_allow_html=True)
     else:
         if selected_signal == "A":
             column_1, column_2 = st.columns(2)
@@ -204,11 +275,14 @@ elif selected_option == "Señales Discretas":
                 graf = generate_discrete_graphique(hb, hn_b, "h[n]", LIGHT_PURPLE_COLOR)
                 st.plotly_chart(graf, use_container_width=True)
 
-        st.markdown("**Seleccione la señal a invertir**")
+        st.markdown(f"""
+            <h3 style='text-align: center;color: {DARK_PURPLE_COLOR};'>Seleccione la señal a invertir</h3>
+        """, unsafe_allow_html=True)
         signal_to_invert = st.selectbox("Cual señal desea invertir", ["Seleccione la señal a invertir", "x[n]", "h[n]"])
         
         if signal_to_invert == "Seleccione la señal a invertir":
-            st.error("Debe seleccionar la señal a invertir para continuar")
+            CSS_CUSTOM_ERROR_STYLES = build_custom_error('⚠️ Debe seleccionar la señal a invertir para continuar')
+            st.markdown(CSS_CUSTOM_ERROR_STYLES, unsafe_allow_html=True)
         else:
             if signal_to_invert == "x[n]":
                 x_inv, y_inv = invert_discrete_signal(x, y)
@@ -222,5 +296,51 @@ elif selected_option == "Señales Discretas":
                 generate_discrete_conv(x, h, y, z)
 
 elif selected_option == "Créditos":
-    st.markdown("Aca va el texto de créditos")
-    st.markdown(".....")
+    st.markdown(CSS_CREDITS_STYLES, unsafe_allow_html=True)
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    column_1, column_2 = st.columns(2)
+    with column_1:
+        st.markdown("""
+        <div class="custom-column">
+        <h3 class="custom-header">Desarrolladores</h3>
+        - Emmanuel Cabrera Janer<br>
+        - Haxell Gómez Lara<br>
+        - Nikolas Pedraza Wilson
+        </div>
+        """, unsafe_allow_html=True)
+
+    with column_2:
+        st.markdown("""
+        <div class="custom-column custom-offset"> <!-- Aplicar el margen superior aquí -->
+        <h3 class="custom-header">Profesor Supervisor</h3>
+        - PhD Juan Tello Portillo
+        </div>
+        """, unsafe_allow_html=True)
+
+    column_3, column_4 = st.columns(2)
+    with column_3:
+        st.markdown("""
+        <div class="custom-column custom-offset">
+        <h3 class="custom-header">Universidad del Norte</h3>
+        - Departamento de Ingeniería Eléctrica y Electrónica
+        </div>
+        """, unsafe_allow_html=True)
+
+    with column_4:
+        st.markdown("""
+        <div class="custom-column"> <!-- Aplicar el margen superior aquí -->
+        <h3 class="custom-header">Tecnologías Utilizadas</h3>
+        - Python: Lenguaje de programación<br>
+        - Streamlit: Framework para la creación de interfaces gráficas web<br>
+        - HTML: Lenguaje para crear el esquema básico de la página<br>
+        - CSS: Lenguaje para personalizar los estilos de la interfaz
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div class="custom-footer">
+        Esta interfaz fue presentada como parte del segundo laboratorio del curso de Señales y Sistemas para el año académico 2024-03
+        </div>
+    """, unsafe_allow_html=True)

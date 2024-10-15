@@ -3,8 +3,20 @@ MEDIUM_BLUE_COLOR = '#2781ff'
 DARK_BLUE_COLOR = '#225eb1'
 LIGHT_PURPLE_COLOR = "#a353ff"
 DARK_PURPLE_COLOR = '#7955ac'
+LIGHT_PURPLE_BG = '#f3e6ff'
+DARK_PURPLE_TEXT = '#8a2be2'
 
-CSS_STYLES = """
+def build_custom_error(text: str):
+    return f"""
+        <div style='background-color: {LIGHT_PURPLE_BG}; padding: 12px; border-radius: 8px; 
+                    margin: 15px 0; text-align: center;'>
+            <span style='color: {DARK_PURPLE_TEXT}; font-size: 16px; font-weight: bold;'>
+                {text}
+            </span>
+        </div>
+    """
+
+CSS_SIDEBARD_STYLES = """
 <style>
     /* Main content area */
 
@@ -86,4 +98,39 @@ CSS_STYLES = """
         margin-bottom: 1rem;
     }
 </style>
+"""
+
+CSS_CREDITS_STYLES = f"""
+    <style>
+        .custom-header {{
+            color: #3C3C3C;  /* Gris oscuro suave para los títulos */
+            background-color: #D6EAF8;  /* Azul pastel claro */
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }}
+        .custom-column {{
+            padding: 20px;
+            background-color: #EBF5FB;  /* Azul pastel muy claro para el fondo de columnas */
+            border-radius: 10px;
+            color: #3C3C3C;  /* Gris oscuro suave para el texto */
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }}
+        .custom-offset {{
+            margin-top: 30px;  /* Margen superior para alinear verticalmente */
+        }}
+        .custom-footer {{
+            color: #3C3C3C;  /* Gris oscuro suave para el pie de página */
+            text-align: center;
+            font-style: italic;
+            margin-top: 30px;
+            font-size: 1.0rem;
+        }}
+        h6 {{
+            font-size: 0.9rem;
+            color: #6E6E6E;  /* Gris medio para subtítulos */
+        }}
+    </style>
 """

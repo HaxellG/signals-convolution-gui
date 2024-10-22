@@ -30,7 +30,7 @@ def generate_continuous_graphique(t, x_t, color, title):
 def generate_double_continuous_graphique(t, x_t, t2, x_t2, color1, title1, color2, title2):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=t, y=x_t, mode="lines", name=title1, line=dict(color=color1)))
-    fig.add_trace(go.Scatter(x=t2, y=x_t2, mode="lines", name=color2, line=dict(color=title2)))
+    fig.add_trace(go.Scatter(x=t2, y=x_t2, mode="lines", name=title2, line=dict(color=color2)))
 
     fig.update_layout(
         xaxis_title="Tiempo",

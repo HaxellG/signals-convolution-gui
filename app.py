@@ -15,6 +15,7 @@ from signals.continuous_signals import (
     generate_continuous_graphique, 
     invert_continous_signal, 
     generate_continous_conv,
+    generate_double_continuous_graphique,
 )
 from signals.discrete_signals import (
     generate_discrete_graphique,
@@ -336,8 +337,15 @@ elif selected_option == "Bonus":
             tmin = np.min(tx1) + np.min(th1)
             tmax = np.max(tx1) + np.max(th1)
             ta = np.arange(tmin, tmax + Delta, Delta)
-            generate_continuous_graphique(ta[:len(ya)], ya, DARK_PURPLE_COLOR, "Convolución")
 
+            tx1 = np.arange(-1, 5+Delta, Delta)
+            tx2 = np.arange(5, 6+Delta, Delta)
+            tx = np.concatenate((tx1,tx2))
+            x_tx1 = (20/31)*np.exp((4/5)*tx1)*(np.exp(31/20) - np.exp(-31/20*tx1))
+            x_tx2 = (20/31)*np.exp((4/5)*tx2)*(np.exp(31/20)-np.exp(-31/4))
+            x_t = np.concatenate((x_tx1,x_tx2))
+            
+            generate_double_continuous_graphique(ta[:len(ya)], ya, tx, x_t, DARK_PURPLE_COLOR, LIGHT_PURPLE_COLOR, "Python", "Analitico")
         elif selected_signal == "B":
             column_1, column_2 = st.columns(2)
             with column_1:
@@ -363,7 +371,15 @@ elif selected_option == "Bonus":
             tmax = np.max(tx2) + np.max(th2)
 
             t = np.arange(tmin, tmax + Delta, Delta)
-            generate_continuous_graphique(t[:len(y)], y, DARK_PURPLE_COLOR, "Convolución")
+            tx1 = np.arange(-4, -1+Delta, Delta)
+            tx2 = np.arange(-1, 2+Delta, Delta)
+            tx3 = np.arange(2, 8+Delta, Delta)
+            tx = np.concatenate((tx1,tx2,tx3))
+            x_tx1 = (7/12)*np.exp((-5/7)*tx1)*(np.exp(((12/7)*tx1) + (12/7)) - np.exp(-36/7))
+            x_tx2 = ((7/12)*np.exp((-5/7)*tx2)*(1-np.exp(-36/7)))-((7/2)*np.exp((-5/7)*tx2)*(np.exp(((-2/7)*(tx2+1))) - 1) )
+            x_tx3 = (7/12)*np.exp((-5/7)*tx3)*((1-np.exp((-36/7))))-(7/2)*np.exp((-5/7)*tx3)*(np.exp(-6/7)-1)
+            x_t = np.concatenate((x_tx1,x_tx2,x_tx3))
+            generate_double_continuous_graphique(t[:len(y)], y, tx, x_t, DARK_PURPLE_COLOR, LIGHT_PURPLE_COLOR, "Python", "Analitico")
         
         elif selected_signal == "C":
             column_1, column_2 = st.columns(2)
@@ -390,7 +406,16 @@ elif selected_option == "Bonus":
             tmax = np.max(tx3) + np.max(th3)
 
             t = np.arange(tmin, tmax + Delta, Delta)
-            generate_continuous_graphique(t[:len(y)], y, DARK_PURPLE_COLOR, "Convolución")
+
+            tx1 = np.arange(-4, 0+Delta, Delta)
+            tx2 = np.arange(0, 4+Delta, Delta)
+            tx = np.concatenate((tx1,tx2))
+            x_tx1 = np.exp(tx1+1)-np.exp(tx1-3)
+            x_tx2 = np.exp(1)-np.exp(tx2-3)
+            
+            x_t = np.concatenate((x_tx1,x_tx2))
+
+            generate_double_continuous_graphique(t[:len(y)], y, tx, x_t, DARK_PURPLE_COLOR, LIGHT_PURPLE_COLOR, "Python", "Analitico")
 
 
 elif selected_option == "Créditos":

@@ -345,7 +345,7 @@ elif selected_option == "Bonus":
             x_tx2 = (20/31)*np.exp((4/5)*tx2)*(np.exp(31/20)-np.exp(-31/4))
             x_t = np.concatenate((x_tx1,x_tx2))
             
-            generate_double_continuous_graphique(ta[:len(ya)], ya, tx, x_t, DARK_PURPLE_COLOR, LIGHT_PURPLE_COLOR, "Python", "Analitico")
+            generate_double_continuous_graphique(ta[:len(ya)], ya, tx, x_t, DARK_PURPLE_COLOR, LIGHT_BLUE_COLOR, "Python", "Analitico")
         elif selected_signal == "B":
             column_1, column_2 = st.columns(2)
             with column_1:
@@ -379,7 +379,7 @@ elif selected_option == "Bonus":
             x_tx2 = ((7/12)*np.exp((-5/7)*tx2)*(1-np.exp(-36/7)))-((7/2)*np.exp((-5/7)*tx2)*(np.exp(((-2/7)*(tx2+1))) - 1) )
             x_tx3 = (7/12)*np.exp((-5/7)*tx3)*((1-np.exp((-36/7))))-(7/2)*np.exp((-5/7)*tx3)*(np.exp(-6/7)-1)
             x_t = np.concatenate((x_tx1,x_tx2,x_tx3))
-            generate_double_continuous_graphique(t[:len(y)], y, tx, x_t, DARK_PURPLE_COLOR, LIGHT_PURPLE_COLOR, "Python", "Analitico")
+            generate_double_continuous_graphique(t[:len(y)], y, tx, x_t, DARK_PURPLE_COLOR, LIGHT_BLUE_COLOR, "Python", "Analitico")
         
         elif selected_signal == "C":
             column_1, column_2 = st.columns(2)
@@ -415,7 +415,7 @@ elif selected_option == "Bonus":
             
             x_t = np.concatenate((x_tx1,x_tx2))
 
-            generate_double_continuous_graphique(t[:len(y)], y, tx, x_t, DARK_PURPLE_COLOR, LIGHT_PURPLE_COLOR, "Python", "Analitico")
+            generate_double_continuous_graphique(t[:len(y)], y, tx, x_t, DARK_PURPLE_COLOR, LIGHT_BLUE_COLOR, "Python", "Analitico")
 
 
 elif selected_option == "Créditos":

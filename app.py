@@ -98,7 +98,7 @@ for i in range(len(hb)):
   hn_b[i] = (9/11)**(hb[i])
 
 
-MENU_OPTIONS = ["Introducción", "Señales Continuas", "Señales Discretas", "Créditos"]
+MENU_OPTIONS = ["Introducción", "Señales Continuas", "Señales Discretas", "Bonus", "Créditos"]
 
 st.set_page_config(layout="wide")
 st.markdown(CSS_TOPBAR_STYLES, unsafe_allow_html=True)
@@ -243,7 +243,7 @@ elif selected_option == "Señales Continuas":
 elif selected_option == "Señales Discretas":
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown(f"""
-            <h3 style='color: {DARK_PURPLE_COLOR};'>Seleccione la señal a graficar</h3>
+            <h3 style='color: {DARK_PURPLE_COLOR};'>Seleccione el par de señales a grafica</h3>
         """, unsafe_allow_html=True)
     selected_signal = st.selectbox("Señal x[n]", ["Seleccione la señal a graficar", "A", "B"])
 
@@ -296,6 +296,102 @@ elif selected_option == "Señales Discretas":
                 inv = generate_discrete_graphique(h_inv, z_inv, "h[n] invertida", LIGHT_BLUE_COLOR)
                 st.plotly_chart(inv, use_container_width=True)
                 generate_discrete_conv(x, h, y, z)
+
+elif selected_option == "Bonus":
+    def u(t):
+        return np.where(t >= 0, 1, 0)
+    Delta = 0.01
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown(f"""
+            <h3 style='color: {DARK_PURPLE_COLOR};'>Seleccione el par de señales a graficar</h3>
+        """, unsafe_allow_html=True)
+    selected_signal = st.selectbox("Señal x[n]", ["Seleccione la señal a graficar", "A", "B", "C"])
+
+    if selected_signal == "Seleccione la señal a graficar":
+        CSS_CUSTOM_ERROR_STYLES = build_custom_error('⚠️ Debe seleccionar las señal a graficar para continuar')
+        st.markdown(CSS_CUSTOM_ERROR_STYLES, unsafe_allow_html=True)
+    else:
+        if selected_signal == "A":
+            column_1, column_2 = st.columns(2)
+            with column_1:
+                tx1 = np.arange(-1-Delta, 5 + Delta, Delta)
+                cont2_x1 = np.exp(-3/4 * tx1) * (u(tx1 + 1) - u(tx1 - 5))
+                x = tx1
+                y = cont2_x1
+                generate_continuous_graphique(x, y, MEDIUM_BLUE_COLOR, "x(t)")
+                
+            with column_2:
+                th1 = np.arange(0-Delta, 5 + Delta, Delta)
+                cont2_h1 = np.exp(4/5 * th1) * u(th1)
+                h = th1
+                z = cont2_h1
+                generate_continuous_graphique(h, z, LIGHT_PURPLE_COLOR, "h(t)")
+            
+            st.markdown(f"""
+            <h3 style='text-align: center;color: {DARK_PURPLE_COLOR};'>Resultado de la Convolución</h3>
+            """, unsafe_allow_html=True)
+
+            ya = np.convolve(cont2_h1, cont2_x1) * Delta
+            tmin = np.min(tx1) + np.min(th1)
+            tmax = np.max(tx1) + np.max(th1)
+            ta = np.arange(tmin, tmax + Delta, Delta)
+            generate_continuous_graphique(ta[:len(ya)], ya, DARK_PURPLE_COLOR, "Convolución")
+
+        elif selected_signal == "B":
+            column_1, column_2 = st.columns(2)
+            with column_1:
+                tx2 = np.arange(-4, 4 + Delta, Delta)
+                cont2_x2 = np.exp(tx2) * (u(-tx2) - u(-tx2 - 3)) + np.exp(-tx2) * (u(tx2) - u(tx2 - 3))
+                x = tx2
+                y = cont2_x2
+                generate_continuous_graphique(x, y, MEDIUM_BLUE_COLOR, "x(t)")
+                
+            with column_2:
+                th2 = np.arange(-2, 6 + Delta, Delta)
+                cont2_h2 = np.exp(-5/7 * th2) * u(th2 + 1)
+                h = th2
+                z = cont2_h2
+                generate_continuous_graphique(h, z, LIGHT_PURPLE_COLOR, "h(t)")
+            
+            st.markdown(f"""
+            <h3 style='text-align: center;color: {DARK_PURPLE_COLOR};'>Resultado de la Convolución</h3>
+            """, unsafe_allow_html=True)
+
+            y = np.convolve(cont2_x2, cont2_h2) * Delta
+            tmin = np.min(tx2) + np.min(th2)
+            tmax = np.max(tx2) + np.max(th2)
+
+            t = np.arange(tmin, tmax + Delta, Delta)
+            generate_continuous_graphique(t[:len(y)], y, DARK_PURPLE_COLOR, "Convolución")
+        
+        elif selected_signal == "C":
+            column_1, column_2 = st.columns(2)
+            with column_1:
+                tx3 = np.arange(-2, 5 + Delta, Delta)
+                cont2_x3 = u(tx3 + 1) - u(tx3 - 3)
+                x = tx3
+                y = cont2_x3
+                generate_continuous_graphique(x, y, MEDIUM_BLUE_COLOR, "x(t)")
+                
+            with column_2:
+                th3 = np.arange(-4, 3 + Delta, Delta)
+                cont2_h3 = np.exp(th3) * u(1 - th3)
+                h = th3
+                z = cont2_h3
+                generate_continuous_graphique(h, z, LIGHT_PURPLE_COLOR, "h(t)")
+            
+            st.markdown(f"""
+            <h3 style='text-align: center;color: {DARK_PURPLE_COLOR};'>Resultado de la Convolución</h3>
+            """, unsafe_allow_html=True)
+
+            y = np.convolve(cont2_x3, cont2_h3) * Delta
+            tmin = np.min(tx3) + np.min(th3)
+            tmax = np.max(tx3) + np.max(th3)
+
+            t = np.arange(tmin, tmax + Delta, Delta)
+            generate_continuous_graphique(t[:len(y)], y, DARK_PURPLE_COLOR, "Convolución")
+
 
 elif selected_option == "Créditos":
     st.markdown(CSS_CREDITS_STYLES, unsafe_allow_html=True)

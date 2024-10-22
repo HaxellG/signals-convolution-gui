@@ -27,6 +27,23 @@ def generate_continuous_graphique(t, x_t, color, title):
     # Mostrar gráfico en la primera columna
     st.plotly_chart(fig, use_container_width=True)
 
+def generate_double_continuous_graphique(t, x_t, t2, x_t2, color1, title1, color2, title2):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=t, y=x_t, mode="lines", name=title1, line=dict(color=color1)))
+    fig.add_trace(go.Scatter(x=t2, y=x_t2, mode="lines", name=color2, line=dict(color=title2)))
+
+    fig.update_layout(
+        xaxis_title="Tiempo",
+        yaxis_title="Amplitud",
+        showlegend=True,
+    )
+
+    fig.update_xaxes(showgrid=True)
+    fig.update_yaxes(showgrid=True)
+
+    # Mostrar gráfico en la primera columna
+    st.plotly_chart(fig, use_container_width=True)
+
 def invert_continous_signal(t, x_t):
     return -t[::-1], x_t[::-1]
 

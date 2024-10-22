@@ -126,6 +126,3 @@ def generate_continous_conv(t, x_t, h, h_t):
 
         # Actualizar la figura de convolución
         plot_placeholder_2.plotly_chart(fig_convolucion, use_container_width=True, key=f"convolution_chart_{i}")
-        
-        # Agregar un pequeño retardo para la animación final
-        time.sleep(0.001)

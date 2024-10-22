@@ -9,7 +9,7 @@ from static.styles import (
 import time
 import streamlit as st
 
-Delta = 0.0001
+Delta = 0.001
 
 def generate_continuous_graphique(t, x_t, color, title):
     fig = go.Figure()
